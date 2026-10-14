@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agentic Coding · Pascal Garber</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<canvas id="bg"></canvas>
+<div class="grid-floor"></div>
+
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <filter id="glow" filterUnits="userSpaceOnUse" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glow2" filterUnits="userSpaceOnUse" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="9" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+</svg>
+
+<div id="stage">
+
+<!-- ============ 01 TITEL ============ -->
+<section class="slide" data-anim="title">
+  <div class="title-wrap">
+    <div class="kicker">Talk // CORRECTIV Tech</div>
+    <h1><span class="grad glitch" data-text="Agentic">Agentic</span><br><span class="neon c-cyan">Coding</span></h1>
+    <div class="sub">Wie KI die Softwareentwicklung umkrempelt<br>und wie wir uns darauf einstellen</div>
+    <div class="who"><b>PASCAL GARBER</b> &nbsp;·&nbsp; 2026</div>
+  </div>
+  <div class="viz orb" id="v-title"></div>
+</section>
+
+<!-- ============ 02 BEISPIELE ============ -->
+<section class="slide">
+  <div class="kicker">01 // Was gerade passiert</div>
+  <h2>Software wird <span class="neon c-mag">kopierbar</span></h2>
+  <div class="sub">Komplette Programme nachgebaut, oft ohne je den Quellcode zu sehen</div>
+  <div class="cards">
+    <div class="panel c-mag">
+      <div class="tag">Nachbau</div>
+      <h3>ArtCraft</h3>
+      <p>13 Profi-Apps (Bild, Video, Layout, Office, CAD) neu in Rust geschrieben</p>
+      <div class="vis"><div class="apps" id="apps"></div></div>
+      <div class="url"><a href="https://getartcraft.com/apps" target="_blank">getartcraft.com/apps</a></div>
+    </div>
+    <div class="panel c-amber">
+      <div class="tag">Reverse Engineering</div>
+      <h3>REA</h3>
+      <p>»Reverse Engineer Anything«: ein MCP-Server für Agents, bis runter zum Binary</p>
+      <div class="vis"><div class="bin"><div class="stream" id="binstream"></div><div class="code">fn sound_pan() ✓ 3205/3205</div></div></div>
+      <div class="url"><a href="https://github.com/morluto/rea" target="_blank">github.com/morluto/rea</a></div>
+    </div>
+    <div class="panel c-lime">
+      <div class="tag">Portierung</div>
+      <h3>Recomp</h3>
+      <p>Konsolenspiele rekompiliert, damit sie nativ auf dem PC laufen</p>
+      <div class="vis"><div class="port"><div><div class="box">🎮</div><small>KONSOLE</small></div><div class="arrow">➜</div><div><div class="box">🖥</div><small>PC / LINUX</small></div></div></div>
+      <div class="url"><a href="https://archive.org/details/@chun_s_ready-to-go_recomp_games" target="_blank">archive.org · ready-to-go recomp games</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 03 WER BEKOMMT DAS MIT ============ -->
+<section class="slide" data-anim="dots">
+  <div class="kicker">01 // Was gerade passiert</div>
+  <h2>Wer bekommt das <span class="neon c-cyan">mit?</span></h2>
+  <div class="sub">1.000 Menschen, grob geschätzt</div>
+  <div class="viz" id="v-dots" style="left:90px; right:560px; top:300px; height:470px"></div>
+  <div class="dots-legend">
+    <div class="row c-blue" data-k="0"><div class="num">75 %</div><div class="txt">nutzen gar keine KI</div></div>
+    <div class="row c-violet" data-k="1"><div class="num">20 %</div><div class="txt">fragen ab und zu einen Chatbot</div></div>
+    <div class="row c-cyan" data-k="2"><div class="num">0,2 %</div><div class="txt">arbeiten mit Agents<br>(Claude Code, Codex …)</div></div>
+    <div class="row c-mag" data-k="3"><div class="num">~5.000</div><div class="txt">Menschen weltweit sehen die besten Modelle von innen</div></div>
+  </div>
+  <div class="foot">Größenordnung nach dem <a href="https://www.youtube.com/watch?v=fUFm3L2Xc9A">Video ↗</a>, keine eigene Erhebung</div>
+</section>
+
+<!-- ============ 04 WARUM CODE ============ -->
+<section class="slide" data-anim="verify">
+  <div class="kicker">01 // Was gerade passiert</div>
+  <h2>Warum gerade <span class="neon c-lime">Code?</span></h2>
+  <div class="viz" id="v-verify" style="left:40px; width:860px; top:230px; height:620px"></div>
+  <div style="position:absolute; left:960px; right:90px; top:240px; display:flex; flex-direction:column; gap:12px">
+    <div class="panel c-lime frag"><div class="tag">automatisch prüfbar</div><div style="font-size:24px;margin-top:4px">Test grün oder rot. Kein Mensch muss bewerten.</div></div>
+    <div class="panel c-cyan frag"><div class="tag">millionenfach wiederholbar</div><div style="font-size:24px;margin-top:4px">Alles im Rechner: üben, prüfen, lernen, ohne Pause</div></div>
+    <div class="panel c-amber frag"><div class="tag">gleiches Prinzip</div><div style="font-size:24px;margin-top:4px">Mathe-Beweise sind auch prüfbar: offene Probleme gelöst</div></div>
+    <div class="panel c-mag frag"><div class="tag">die Schleife</div><div style="font-size:24px;margin-top:4px">KI-Forschung ist Code: <b class="neon c-mag">KI baut die nächste KI</b></div></div>
+  </div>
+</section>
+
+<!-- ============ 05 ZITAT ============ -->
+<section class="slide" data-anim="quote">
+  <div class="viz" id="v-curve" style="left:0; right:0; top:0; height:900px"></div>
+  <div class="kicker" style="position:absolute; left:140px; top:150px">// merkt euch diesen Satz</div>
+  <div class="quote" id="quote"></div>
+  <div class="noback" id="noback">KEIN SCHRITT ZURÜCK.</div>
+</section>
+
+<!-- ============ 06 EIGENE TOOLS ============ -->
+<section class="slide">
+  <div class="kicker c-mag">02 // Wie ich arbeite</div>
+  <h2>Eigene Werkzeuge <span class="neon c-mag">für eigene Probleme</span></h2>
+  <div class="tools">
+    <div class="panel c-lime">
+      <a class="tag" href="https://jumplink.eu/steuererklaerung/">jumplink.eu/steuererklaerung ↗</a>
+      <h3>Steuererklärung</h3>
+      <div class="flow">
+        <div class="before"><small>VORHER</small>Jedes Jahr ein Kampf, der ewig liegen bleibt</div>
+        <div class="to">➜</div>
+        <div class="after"><small>JETZT</small>Selbst gemacht und automatisch eingereicht</div>
+      </div>
+      <ul><li>Belege</li><li>Buchungen</li><li>EÜR</li><li>USt</li><li>ELSTER</li><li>lokal</li></ul>
+    </div>
+    <div class="panel c-cyan">
+      <a class="tag" href="https://jumplink.eu/beifahrer/">jumplink.eu/beifahrer ↗</a>
+      <h3>Beifahrer</h3>
+      <div class="flow">
+        <div class="before"><small>VORHER</small>Rechnungen von jedem Portal einzeln runterladen</div>
+        <div class="to">➜</div>
+        <div class="after"><small>JETZT</small>Ein Agent macht das in meinem eigenen Browser</div>
+      </div>
+      <ul><li>Firefox</li><li>Chromium</li><li>MCP</li><li>Regel pro Website</li><li>lokal</li></ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 07 SOLO WORKFLOW ============ -->
+<section class="slide" data-anim="solo">
+  <div class="kicker c-mag">02 // Workflow · Privat</div>
+  <h2>Ein Mensch. <span class="neon c-cyan">Viele Agents.</span></h2>
+  <div class="viz" id="v-solo" style="left:0; right:0; top:200px; height:680px"></div>
+  <div class="legend" style="left:90px; bottom:70px"><span class="c-mag">Mensch</span><span class="c-cyan">KI-Agent</span></div>
+  <div class="meter c-lime" style="right:90px; bottom:70px">TEMPO <i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div>
+</section>
+
+<!-- ============ 08 AGENT LOOP ============ -->
+<section class="slide" data-anim="agentloop">
+  <div class="kicker">02 // Das Herzstück</div>
+  <h2>Der Agent prüft <span class="neon c-violet">sich selbst</span></h2>
+  <div class="viz" id="v-loop" style="left:40px; width:860px; top:200px; height:660px"></div>
+  <div class="term panel c-cyan" id="term"></div>
+  <div class="appwin panel c-violet" id="appwin">
+    <div class="chrome"><i></i><i></i><i></i>&nbsp; localhost:5173</div>
+    <div class="body">
+      <div class="blk" style="left:16px; top:16px; width:130px; bottom:16px"></div>
+      <div class="blk" style="left:162px; top:16px; right:16px; height:40px"></div>
+      <div class="blk" style="left:162px; top:70px; width:190px; height:110px"></div>
+      <div class="blk" style="left:366px; top:70px; right:16px; height:110px"></div>
+      <div class="btn" id="appbtn" style="left:300px; top:194px; width:120px; height:34px">Speichern</div>
+      <div class="bad-box" id="badbox" style="left:292px; top:186px; width:136px; height:50px"></div>
+      <div class="cursor" id="cursor" style="left:520px; top:200px"></div>
+      <div class="scanline" id="scanline"></div>
+      <div class="flash" id="flash"></div>
+      <div class="eye" id="eye">👁 AGENT PRÜFT SCREENSHOT</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 09 VERTRAUEN ============ -->
+<section class="slide" data-anim="trust">
+  <div class="kicker c-lime">02 // Das Fundament</div>
+  <h2>Ohne Tests <span class="neon c-lime">kein Vertrauen</span></h2>
+  <div class="chain" id="chain">
+    <div class="lk c-lime"><div class="ic">✓</div><h3>Tests</h3><p>umfangreicher, als wir Menschen sie je geschrieben hätten</p></div>
+    <div class="lk c-cyan"><div class="ic">⛨</div><h3>Vertrauen</h3><p>nichts geht mehr unbemerkt kaputt</p></div>
+    <div class="lk c-violet"><div class="ic">⟳</div><h3>Autonomie</h3><p>Agents arbeiten, ohne dass jemand daneben sitzt</p></div>
+    <div class="lk c-mag"><div class="ic">⚡</div><h3>Tempo</h3><p>Menschen prüfen Ergebnisse statt jeder Zeile</p></div>
+  </div>
+  <div class="trust-note" id="trustnote">Kleine Änderung: <b>direkt mergen</b> &nbsp;·&nbsp; kritische Änderung: <b class="c-amber" style="color:var(--amber);text-shadow:0 0 12px var(--amber)">genau hinschauen</b></div>
+</section>
+
+<!-- ============ 10 TEAM WORKFLOW ============ -->
+<section class="slide" data-anim="team">
+  <div class="kicker c-amber">02 // Workflow · Faktenforum</div>
+  <h2>Mehrere Menschen. <span class="neon c-cyan">Jede:r mit Agents.</span></h2>
+  <div class="viz" id="v-team" style="left:0; right:0; top:200px; height:680px"></div>
+  <div class="legend" style="left:90px; bottom:70px"><span class="c-amber">Anfrage</span><span class="c-mag">Mensch</span><span class="c-cyan">KI-Agent</span><span class="c-lime">gemerged</span></div>
+  <div class="meter c-lime" style="right:90px; bottom:70px">TEMPO <i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div>
+</section>
+
+<!-- ============ 11 EIN TEAM PRO PERSON ============ -->
+<section class="slide" data-anim="devteam">
+  <div class="kicker c-violet">03 // Was das für uns heißt</div>
+  <h2>Jede:r hat ein <span class="neon c-violet">ganzes Team</span></h2>
+  <div class="viz" id="v-devteam" style="left:0; right:0; top:180px; height:700px"></div>
+</section>
+
+<!-- ============ 12 SYSTEME ============ -->
+<section class="slide" data-anim="systems">
+  <div class="kicker c-violet">03 // Was das für uns heißt</div>
+  <h2>Was bisher zu <span class="neon c-amber">aufwendig</span> war</h2>
+  <div class="viz" id="v-systems" style="left:0; right:0; top:190px; height:690px"></div>
+</section>
+
+<!-- ============ 13 BURGGRABEN ============ -->
+<section class="slide" data-anim="moats">
+  <div class="kicker c-violet">03 // Was das für uns heißt</div>
+  <h2>Was bleibt <span class="neon c-lime">wertvoll?</span></h2>
+  <div class="viz" id="v-moats" style="left:60px; width:560px; top:280px; height:500px"></div>
+  <div class="pillars" id="pillars">
+    <div class="panel c-cyan"><div class="tag">01</div><h3>Inhalte &amp; Daten</h3><p>Recherchen, die sonst niemand hat</p></div>
+    <div class="panel c-mag"><div class="tag">02</div><h3>Community</h3><p>Menschen, die füreinander Wert schaffen</p></div>
+    <div class="panel c-amber"><div class="tag">03</div><h3>Marke &amp; Reichweite</h3><p>lässt sich nicht nachbauen</p></div>
+    <div class="panel c-lime"><div class="tag">04</div><h3>Vertrauen</h3><p>über Jahre verdient</p></div>
+  </div>
+  <div class="moat-cta" id="moatcta">→ genau das, was <span class="neon c-mag">CORRECTIV</span> ausmacht</div>
+</section>
+
+<!-- ============ 14 ANPASSEN ============ -->
+<section class="slide">
+  <div class="kicker c-lime">03 // Wie wir uns anpassen</div>
+  <h2>Was wir <span class="neon c-lime">jetzt</span> tun können</h2>
+  <div class="steps">
+    <div class="st frag c-cyan"><div class="no">1</div><div><h3>Selbst ausprobieren</h3><p>Agents statt Chatbot: Claude Code, Codex, OpenCode …</p></div></div>
+    <div class="st frag c-lime"><div class="no">2</div><div><h3>Tests zuerst</h3><p>das Fundament, auf dem alles andere steht</p></div></div>
+    <div class="st frag c-violet"><div class="no">3</div><div><h3>Vertrauen geben</h3><p>Ergebnisse prüfen statt Zeilen · klare Regeln, was vier Augen braucht</p></div></div>
+    <div class="st frag c-mag"><div class="no">4</div><div><h3>Eigene Werkzeuge bauen</h3><p>jede nervige Aufgabe ist ein Kandidat</p></div></div>
+    <div class="st frag c-amber"><div class="no">5</div><div><h3>Systeme verbinden</h3><p>vereinfachen und ersetzen statt nur dazukaufen</p></div></div>
+  </div>
+</section>
+
+<!-- ============ 15 ENDE ============ -->
+<section class="slide" data-anim="title">
+  <div class="viz orb" id="v-end" style="left:480px; top:130px; opacity:.4"></div>
+  <div class="end">
+    <div>
+      <h1><span class="grad">Danke.</span></h1>
+      <div class="sub">FRAGEN · DISKUSSION · AUSPROBIEREN</div>
+    </div>
+  </div>
+  <div class="foot">Quellen: <a href="https://www.youtube.com/watch?v=fUFm3L2Xc9A">Video ↗</a> · <a href="https://getartcraft.com/apps">ArtCraft ↗</a> · <a href="https://github.com/morluto/rea">REA ↗</a> · <a href="https://archive.org/details/@chun_s_ready-to-go_recomp_games">Recomp ↗</a> · <a href="https://jumplink.eu/steuererklaerung/">Steuererklärung ↗</a> · <a href="https://jumplink.eu/beifahrer/">Beifahrer ↗</a></div>
+</section>
+
+</div>
+
+<div class="hud">
+  <div class="corner tl"></div><div class="corner tr"></div><div class="corner bl"></div><div class="corner br"></div>
+  <div class="top"><span><b>SYS://</b>AGENTIC-CODING</span><span id="clock">--:--:--</span><span><span class="blink">●</span> LIVE</span></div>
+  <div class="bottom"><span id="count">01/15</span><div class="bar"><i id="progress"></i></div><span id="act">INTRO</span></div>
+</div>
+<div class="vignette"></div>
+<div class="scan"></div>
+<div id="notes"></div>
+<div id="help">→ / Leertaste / Klick &nbsp;weiter<br>← &nbsp;zurück<br>F &nbsp;Vollbild<br>N &nbsp;Notizen<br>B &nbsp;Schwarz<br>Pos1 / Ende &nbsp;Anfang / Ende<br>? &nbsp;Hilfe</div>
+<div id="black"></div>
+
+<script src="lib.js"></script>
+<script src="anims-a.js"></script>
+<script src="anims-b.js"></script>
+<script src="notes.js" onerror="window.NOTES=[]"></script>
+<script src="nav.js"></script>
+<script src="cursor.js"></script>
+</body>
+</html>
